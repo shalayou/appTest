@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" type="text/css" href="./css/aui.css" />
+    <style type="text/css">
+    html,body{
+        height: 100%;
+    }
+    #wrap{
+        height: 100%;
+        padding:10px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+    }
+    #aui-header{
+        text-align: center; 
+		background-color: #47d1fe; 
+		color: #fff;
+        width: 100%;
+    }
+    #header h1{
+        font-size: 20px; 
+		height: 44px; 
+		line-height: 44px; 
+		margin: 0em; 
+		color: #fff;
+    }
+    #main{
+        -webkit-box-flex: 1; 
+        -webkit-flex: 1;
+    }
+    #footer{
+        height: 30px; 
+		line-height: 30px;
+        background-color: white; 
+        color:#a5a5a5;
+        width: 100%;
+        text-align: center;
+    }
+    .con{
+		font-size: 28px; 
+		text-align: center;
+	}
+    .aui-bar-tab .aui-active {
+        color: #47d1fe;
+    }
+    .aui-bar-tab .aui-bar-tab-item .aui-iconfont {
+        
+        top: 0.4rem;
+       
+        /*line-height: 1rem;*/
+    }
+    .wrap .box{
+        padding:10px;
+    }
+    .wrap .box h3{
+        color:#6c6c6c;
+    }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <header class="aui-bar aui-bar-nav" id="aui-header">顶部导航栏</header>  
+        <div id="main">
+            <div class="box">
+                <img src="./image/squre.png" alt="世界那么大">
+                <br/>
+                <h3>分解 | 世界那么大，我想去看看</h3>
+            </div>  
+        </div>
+        <footer class="aui-bar aui-bar-tab" id="footer">  
+            <div id="tabbar1" class="aui-bar-tab-item aui-active" tapmode onclick="randomSwitchBtn(this,'热门',0)">  
+                <i class="aui-iconfont aui-icon-like"></i>  
+                <div class="aui-bar-tab-label">热门</div>  
+            </div>  
+            <div id="tabbar2" class="aui-bar-tab-item" tapmode onclick="randomSwitchBtn(this,'广场',1)">  
+                <i class="aui-iconfont aui-icon-map"></i>  
+                <div class="aui-bar-tab-label">广场</div>  
+            </div>  
+            <div id="tabbar3" class="aui-bar-tab-item" tapmode onclick="randomSwitchBtn(this,'动态',2)">  
+                <i class="aui-iconfont aui-icon-comment"></i>  
+                <div class="aui-bar-tab-label">动态</div>  
+            </div>  
+            <div id="tabbar4" class="aui-bar-tab-item" tapmode onclick="randomSwitchBtn(this,'收藏',3)">  
+                <i class="aui-iconfont aui-icon-star"></i>  
+                <div class="aui-bar-tab-label">收藏</div>  
+            </div>   
+        </footer>
+    </div>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+		/*输出Log，Log将显示在APICloud Studio控制台
+		console.log("Hello APICloud");
+
+        var header = $api.byId('header');
+        //适配iOS7+，Android4.4+状态栏沉浸式效果，详见config文档statusBarAppearance字段
+        $api.fixStatusBar(header);
+		//动态计算header的高度，因iOS7+和Android4.4+上支持沉浸式效果，
+		//因此header的实际高度可能为css样式中声明的44px加上设备状态栏高度
+		//其中，IOS状态栏高度为20px，Android为25px
+        var headerH = $api.offset(header).h;
+		//footer高度为css样式中声明的30px
+		var footerH = 30;
+		//frame的高度为当前window高度减去header和footer的高度
+		var frameH = api.winHeight - headerH - footerH;
+        api.openFrame({
+            name: 'main',
+            url: 'html/main.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerH,
+                w: 'auto',
+                h: frameH
+            }
+        });
+
+        var year = $api.byId('year');
+        year.innerHTML = new Date().getFullYear();*/
+        api.parseTapmode();  
+        var header = $api.byId('aui-header');  
+        var footer =　$api.byId('footer')  
+        $api.fixStatusBar(header);   
+        var headerPos = $api.offset(header);  
+        var body_h = api.winHeight;  
+        var footer_h = $api.offset(footer).h;  
+    
+        api.openFrameGroup ({  
+            name: 'footer_tab_demo',  
+            scrollEnabled:true,  
+            rect:{  
+            x:0,   
+            y:headerPos.h,   
+            w:'auto',   
+            h:body_h - headerPos.h - footer_h  
+            },  
+            index:0,  
+            preload:3,  
+            frames:  
+            [{  
+                name: 'main',   
+                url: 'html/main.html',   
+                bounces:false  
+            },{  
+                name: 'footer_tab_2',   
+                url: 'html/footer_tab_2.html',   
+                bounces:false  
+            },{  
+                name: 'footer_tab_3',   
+                url: 'html/footer_tab_3.html',   
+                bounces:false  
+            },{  
+                name: 'footer_tab_4',   
+                url: 'html/footer_tab_4.html',   
+                bounces:false  
+            },{  
+                name: 'footer_tab_5',   
+                url: 'html/footer_tab_5.html',   
+                bounces:false  
+            }]  
+        }, function(ret, err){  
+            var footer = $api.byId('footer');  
+            var footerAct = $api.dom(footer, '.aui-bar-tab-item.aui-active');  
+            $api.removeCls(footerAct, 'aui-active');  
+  
+            var name = ret.name;  
+            var index = ret.index;  
+            if(index==0){  
+                $api.text($api.byId('aui-header'),'热门');  
+                $api.addCls($api.byId('tabbar1'), 'aui-active');  
+            }else if(index==1){  
+                $api.text($api.byId('aui-header'),'广场');  
+                $api.addCls($api.byId('tabbar2'), 'aui-active');  
+            }else if(index==2){  
+                $api.text($api.byId('aui-header'),'动态');  
+                $api.addCls($api.byId('tabbar3'), 'aui-active');  
+            }else if(index==3){  
+                $api.text($api.byId('aui-header'),'收藏');  
+                $api.addCls($api.byId('tabbar4'), 'aui-active');  
+              
+            }
+        })  
+    }  
+    function closeWin(){  
+        api.closeWin();  
+    }  
+    function randomSwitchBtn(obj, name, index) {  
+        $api.text($api.byId('aui-header'),name);  
+    var footer = $api.byId('footer');  
+    var footerAct = $api.dom(footer, '.aui-bar-tab-item.aui-active');  
+        $api.removeCls(footerAct, 'aui-active');  
+        $api.addCls(obj, 'aui-active');  
+        api.setFrameGroupIndex({  
+            name: 'footer_tab_demo',  
+            index: index,  
+            scroll:true  
+        });  
+    }
+
+</script>
+</html>
